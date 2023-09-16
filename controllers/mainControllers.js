@@ -1,18 +1,17 @@
 const Email = require("../models/emailSchema")
-const fs = require('fs');
 require("dotenv").config();
 
 const nodemailer = require("nodemailer");
 
 
 const transporter = nodemailer.createTransport({
-  name: "mail.btbintl.com",
-  host: 'mail.btbintl.com',
+  name: process.env.AUTH_HOST,
+  host: process.env.AUTH_HOST,
   port: 465, // Bluehost usually uses port 465 for secure SMTP.
   secure: true, // Use SSL/TLS for secure connection.
   auth: {
-    user: 'support@btbintl.com',
-    pass: 'KRJj+cVyUnV2',
+    user: process.env.AUTH_EMAIL,
+    pass: process.env.AUTH_PASS_APP,
   },
 });
 
@@ -32,7 +31,7 @@ const sendEmail = async(req,res,next) => {
   console.log(req.body)
   const {closerName , customerName , customerEmail , hotelName , hotelPrice} = req.body 
   const mailOption = {
-    from: "support@btbintl.com", // sender address
+    from: process.env.AUTH_EMAIL, // sender address
     to: customerEmail, // list of receivers
     subject: closerName, // Subject line
     html: `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
