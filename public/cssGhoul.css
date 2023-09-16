@@ -25,12 +25,17 @@ html,
 body {
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
 }
 
 .contain {
     padding-left: 100px;
     padding-right: 100px;
     position: relative;
+}
+
+main{
+    padding: 20px 0;
 }
 
 .overlay {

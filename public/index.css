@@ -1,5 +1,9 @@
+body.active {
+    max-height: 100vh;
+}
+
 /*Start Header*/
-.contain .logo, header .contain .booking ,.logs .contain .log{
+.contain .logo, header .contain .booking, .logs .contain .log {
     border-bottom: 1px solid var(--gray);
 }
 
@@ -12,40 +16,44 @@ button.primary, button.secondary {
         font-size: 16px;
     }
 }
+
 @media (max-width:768px) {
     button.primary, button.secondary {
         font-size: 14px;
     }
 }
+
 /*End Header*/
 /*Start Logs*/
-.log_info h5{
+.log_info h5 {
     font-weight: normal;
 }
-.log_options div{
+
+.log_options div {
     cursor: pointer;
 }
+
 /*End Logs*/
 
 
 /*Start Booking Form*/
 
 .booking_form .contain {
-    transform: translateX(-100%);
+    transform: translateX(100%);
     position: absolute;
     width: 50%;
     height: 100%;
-    transition: var(--tran);
+    transition: var(--transition);
     overflow: auto;
+    top: 0;
+    right: 0;
+    background-color: var(--white);
 }
 
 .booking_form .contain.active {
-    background-color: var(--white);
     position: absolute;
     transform: translateX(0);
-    top: 0;
-    right: 0;
-    transition: var(--tran);
+    transition: var(--transition);
 }
 
 .booking_form .contain .close_icon i {
@@ -69,55 +77,88 @@ button.primary, button.secondary {
     font-size: 16px;
 }
 
-@media(max-width:992px){
+@media(max-width:992px) {
     .booking_form .contain {
         width: 75%;
     }
-    
+
     .booking_form .contain .close_icon i {
         font-size: 18px;
     }
-    
+
     .booking_form form input, .booking_form form select {
         padding: 8px;
         border: 2px solid var(--gray);
         border-radius: 3px;
         font-size: 16px
     }
-    
+
     .booking_form form div label {
         font-size: 16px
     }
-    
+
     .booking_form form input::placeholder {
-        font-size:14px;
+        font-size: 14px;
     }
 }
 
-@media(max-width:768px){
+@media(max-width:768px) {
     .booking_form .contain {
         width: 100%;
     }
-    
-    .booking_form .contain .close_icon i{
+
+    .booking_form .contain .close_icon i {
         font-size: 16px;
     }
-    
+
     .booking_form form input, .booking_form form select {
         padding: 6px;
         border: 1px solid var(--gray);
         border-radius: 2px;
         font-size: 14px
     }
-    
+
     .booking_form form div label {
         font-size: 14px
     }
-    
+
     .booking_form form input::placeholder {
-        font-size:12px;
+        font-size: 12px;
     }
 }
+
 /*End Booking Form*/
 
 
+/*Start loading*/
+.loading {
+    display: none;
+}
+
+.loading.active {
+    opacity: flex;
+}
+
+.loading img {
+    width: 100px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    border-radius: 50%;
+}
+
+@media(max-width:992px) {
+    .loading img {
+        width: 75px;
+    }
+}
+
+@media(max-width:768px) {
+    .loading img {
+        width: 50px;
+    }
+}
+
+/*End loading*/

@@ -30,6 +30,8 @@
                 <div class="log grid jcs aic pad10 g10">
                     <div class="log_info grid jcfs aic g5">
                         <h4><%= e.CustomerName%></h4>
+                        <h4><%= e.CustomerEmail%></h4>
+                        <h4><%= e.HotelPrice%></h4>
                         <h5><%= e.createdAt %></h5>
                     </div>
                     <div class="log_options flex jcfe aic g20">
@@ -97,6 +99,10 @@
                 </div>
             </form>
         </section>
+  
+        <div class="loading jcc aic">
+            <div class="overlay"></div>
+            <img src="../public/Images/spinner.gif" alt="loading" />
         </div>
     </main>
 
