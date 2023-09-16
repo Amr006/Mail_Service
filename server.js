@@ -9,7 +9,9 @@ const mongoose = require("mongoose");
 const helmet = require('helmet')
 const path = require('path');
 const bodyParser = require('body-parser')
-
+const jwt = require('jsonwebtoken')
+const cookieParser = require("cookie-parser");
+const cors = require('cors');
 var fs = require('fs')
 
 
@@ -22,10 +24,10 @@ app.use(express.json()) //can remove
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(bodyParser.json())
+app.use(cors())
+app.use(cookieParser());
 
-
-
-app.use("/" , Routes)
+app.use("" ,  Routes)
 
 
 

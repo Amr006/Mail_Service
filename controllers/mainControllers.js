@@ -1,6 +1,7 @@
 const Email = require("../models/emailSchema")
 require("dotenv").config();
-
+const asyncHandler = require("express-async-handler");
+const jwt = require('jsonwebtoken')
 const nodemailer = require("nodemailer");
 
 
@@ -26,7 +27,7 @@ transporter.verify((err, success) => {
 
 
 
-const sendEmail = async(req,res,next) => {
+const sendEmail = asyncHandler(async(req,res,next) => {
   console.log("req.body")
   console.log(req.body)
   const {closerName , customerName , customerEmail , hotelName , hotelPrice} = req.body 
@@ -1303,9 +1304,9 @@ const sendEmail = async(req,res,next) => {
   )
 
   
-}
+})
 
-const displayLogs = async (req,res,next) => {
+const displayLogs = asyncHandler(async (req,res,next) => {
   try{
     const data = await Email.find().sort({createdAt: -1})
     console.log(data)
@@ -1322,11 +1323,35 @@ const displayLogs = async (req,res,next) => {
   }
 
   
+})
+
+const login = asyncHandler( async (req,res,next) => {
+
+  const { Password } = req.body 
+  console.log(req.body)
+  if(Password == process.env.SECRET_PASS)
+  {
+    let token = jwt.sign(
+      {},
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "30h",
+      }
+    );
+    console.log(token)
+    res.cookie("token", token);
+    res.redirect("/")
+  }else
+  {
+    res.render("../view/login.ejs")
+  }
 }
+)
 
 
 module.exports = {
   sendEmail,
   displayLogs,
+  login,
 
 }
