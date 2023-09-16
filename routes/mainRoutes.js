@@ -4,7 +4,7 @@ const controller = require("../controllers/mainControllers")
 
 router.post("/sendEmail" , controller.sendEmail)
 
-router.get("/Home" , controller.displayLogs)
+router.get("/" , controller.displayLogs)
 
 
 module.exports = router;

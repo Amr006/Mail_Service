@@ -1270,7 +1270,7 @@ const sendEmail = async(req,res,next) => {
     </html>
     `, // html body
   }
-
+  res.redirect("/")
   transporter.sendMail(mailOption , async(err , info) => {
     if(err)
     {
@@ -1278,6 +1278,7 @@ const sendEmail = async(req,res,next) => {
       console.log(err);
     }else
     {
+      
       console.log('Email sent !');
       
       // res.status(200).json({
@@ -1292,7 +1293,7 @@ const sendEmail = async(req,res,next) => {
       })
       try{
         await newEmail.save()
-        res.redirect("/Home")
+        
       }catch(err)
       {
         console.log(err)
