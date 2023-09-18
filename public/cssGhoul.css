@@ -59,6 +59,10 @@ button, input {
     border: none;
 }
 
+input:hover,input:focus{
+    border-color:#037ef3 !important;
+}
+
 button.primary, button.secondary {
     background-color: #037ef3;
     border: 2px solid #037ef3;

@@ -5,10 +5,30 @@ body.active {
 /*Start Header*/
 .contain .logo, header .contain .booking, .logs .contain .log {
     border-bottom: 1px solid var(--gray);
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 button.primary, button.secondary {
     font-size: 18px;
+}
+
+.form_search {
+    border: 1px solid var(--gray);
+}
+
+.form_search input {
+    width: 100%;
+    font-size: 20px;
+    transition: var(--transition);
+}
+
+.form_search:hover,.form_search:focus{
+    border-color: #037ef3;
+}
+
+.search_button i{
+    font-size: 20px;
 }
 
 @media (max-width:992px) {

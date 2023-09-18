@@ -1,6 +1,7 @@
 const overlay = document.querySelector(".back");
-const bookingForm = document.querySelector("section.booking_form .contain");
+const bookingFormContain = document.querySelector("section.booking_form .contain");
 const loading = document.querySelector(".loading");
+const bookingForm = document.getElementById(".booking_form");
 
 //Buttons
 const addButton = document.getElementById("add_button");
@@ -18,13 +19,13 @@ const hotelPrice = document.getElementById("hotel_price");
 
 function close_form() {
   overlay.classList.remove("overlay");
-  bookingForm.classList.remove("active");
+  bookingFormContain.classList.remove("active");
   document.body.classList.remove("active");
 }
 
 addButton.addEventListener("click", () => {
   overlay.classList.add("overlay");
-  bookingForm.classList.add("active");
+  bookingFormContain.classList.add("active");
   document.body.classList.add("active");
 });
 
@@ -34,6 +35,6 @@ closeButton.addEventListener("click", close_form);
 
 cancelButton.addEventListener("click", close_form);
 
-saveButton.addEventListener("click", () => {
+bookingForm.addEventListener("submit", () => {
   loading.classList.add("active");
 });
