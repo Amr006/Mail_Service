@@ -1,9 +1,8 @@
-const Email = require("../models/emailSchema")
+const Email = require("../models/emailSchema");
 require("dotenv").config();
 const asyncHandler = require("express-async-handler");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-
 
 const transporter = nodemailer.createTransport({
   name: process.env.AUTH_HOST,
@@ -25,12 +24,16 @@ transporter.verify((err, success) => {
   }
 });
 
-
-
-const sendEmail = asyncHandler(async(req,res,next) => {
-  console.log("req.body")
-  console.log(req.body)
-  const {closerName , customerName , customerEmail , hotelName , hotelPrice} = req.body 
+const sendEmail = asyncHandler(async (req, res, next) => {
+  console.log("req.body");
+  console.log(req.body);
+  const {
+    closerName,
+    customerName,
+    customerEmail,
+    hotelName,
+    hotelPrice,
+  } = req.body;
   const mailOption = {
     from: process.env.AUTH_EMAIL, // sender address
     to: customerEmail, // list of receivers
@@ -1269,129 +1272,103 @@ const sendEmail = asyncHandler(async(req,res,next) => {
     
     </html>
     `, // html body
-  }
-  
-  transporter.sendMail(mailOption , async(err , info) => {
-    if(err)
-    {
-      console.error('Error sending email:');
+  };
+
+  transporter.sendMail(mailOption, async (err, info) => {
+    if (err) {
+      console.error("Error sending email:");
       console.log(err);
-    }else
-    {
-      
-      console.log('Email sent !');
-      
+    } else {
+      console.log("Email sent !");
+
       // res.status(200).json({
       //   message : "Email sent"
       // })
       const newEmail = new Email({
-        CloserName : closerName,
-        CustomerName : customerName,
-        CustomerEmail : customerEmail,
-        HotelName : hotelName,
-        HotelPrice : hotelPrice ,
-      })
-      try{
-        await newEmail.save()
-        res.redirect("/")
-        
-      }catch(err)
-      {
-        console.log(err)
+        CloserName: closerName,
+        CustomerName: customerName,
+        CustomerEmail: customerEmail,
+        HotelName: hotelName,
+        HotelPrice: hotelPrice,
+      });
+      try {
+        await newEmail.save();
+        res.redirect("/");
+      } catch (err) {
+        console.log(err);
       }
-      
     }
-  }
-  )
+  });
+});
 
-  
-})
-
-const displayLogs = asyncHandler(async (req,res,next) => {
-  try{
-    const data = await Email.find().sort({createdAt: -1}).limit(10)
-    console.log(data)
-    res.render("../view/index.ejs" , {data : data})
+const displayLogs = asyncHandler(async (req, res, next) => {
+  try {
+    const data = await Email.find().sort({ createdAt: -1 }).limit(10);
+    console.log(data);
+    res.render("../view/index.ejs", { data: data });
     // return res.status(200).json({
     //   data : data
     // })
-  }catch(err)
-  {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
     return res.status(404).json({
-      message : "Error while getting data !"
-    })
+      message: "Error while getting data !",
+    });
   }
+});
 
-  
-})
-
-const login = asyncHandler( async (req,res,next) => {
-
-  const { Password } = req.body 
-  console.log(req.body)
-  if(Password == process.env.SECRET_PASS)
-  {
-    let token = jwt.sign(
-      {},
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "30h",
-      }
-    );
-    console.log(token)
+const login = asyncHandler(async (req, res, next) => {
+  const { Password } = req.body;
+  console.log(req.body);
+  if (Password == process.env.SECRET_PASS) {
+    let token = jwt.sign({}, process.env.SECRET_KEY, {
+      expiresIn: "30h",
+    });
+    console.log(token);
     res.cookie("token", token);
-    res.redirect("/")
-  }else
-  {
-    res.render("../view/login.ejs")
+    res.redirect("/");
+  } else {
+    res.render("../view/login.ejs");
   }
-}
-)
+});
 
-const search = asyncHandler( async (req,res,next) => {
-  console.log(req)
-  const { search } = req.body 
-  if(search)
-  {
-  const data = await Email.aggregate([
-    {
-      $search: {
-        index: "search",
-        text: {
-          query: search,
-          path: {
-            wildcard: "*"
+const search = asyncHandler(async (req, res, next) => {
+  const { search } = req.body;
+  if (search) {
+    const data = await Email.aggregate([
+      {
+        $search: {
+          index: "search",
+          text: {
+            query: search,
+            path: {
+              wildcard: "*",
+            },
+            fuzzy: {},
           },
-          "fuzzy" : {}
-        }
-      }
-    },
-    {
-      $sort: {
-        score: -1 // Sort by the 'score' field in descending order
-      }
-    }
-  ])
+        },
+      },
+      {
+        $sort: {
+          score: -1, // Sort by the 'score' field in descending order
+        },
+      },
+    ]);
 
-  // return res.status(200).json({
-  //   data : data
-  // })
-
-  res.render("../view/index.ejs" , {data : data})
-}else
-{
-  const data = await Email.find().sort({createdAt: -1}).limit(10)
-    console.log(data)
-    res.render("../view/index.ejs" , {data : data})
-}
-
-}
-)
+    // return res.status(200).json({
+    //   data : data
+    // })
+    res.render("../view/index.ejs", { data: data });
+  } else {
+    const data = await Email.find().sort({ createdAt: -1 }).limit(10);
+    console.log(data);
+    res.render("../view/index.ejs", { data: data });
+  }
+});
 
 module.exports = {
   sendEmail,
   displayLogs,
   login,
   search,
-}
+};
