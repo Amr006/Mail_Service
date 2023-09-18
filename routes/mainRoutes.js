@@ -9,7 +9,7 @@ router.post("/sendEmail" ,protect , controller.sendEmail)
 
 router.post("/login" , controller.login)
 
-
+router.post("/search" , controller.search)
 
 
 
