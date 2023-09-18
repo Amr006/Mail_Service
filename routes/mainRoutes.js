@@ -1,10 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/mainControllers")
+const protect = require("../middleware/authMiddleware")
 
-router.post("/sendEmail" , controller.sendEmail)
+router.get("/" , protect , controller.displayLogs)
 
-router.get("/Home" , controller.displayLogs)
+router.post("/sendEmail" ,protect , controller.sendEmail)
+
+router.post("/login" , controller.login)
+
+
+
+
 
 
 module.exports = router;
