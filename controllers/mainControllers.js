@@ -1301,11 +1301,11 @@ const sendEmail = asyncHandler(async (req, res, next) => {
   });
 });
 
-const displayLogs = asyncHandler(async (req, res, next) => {
-  try {
-    const data = await Email.find().sort({ createdAt: -1 }).limit(10);
-    console.log(data);
-    res.render("../view/index.ejs", { data: data });
+const displayLogs = asyncHandler(async (req,res,next) => {
+  try{
+    const data = await Email.find().sort({createdAt: -1}).limit(10)
+    console.log(data)
+    res.render("../view/index.ejs" , {data : data})
     // return res.status(200).json({
     //   data : data
     // })
@@ -1332,39 +1332,45 @@ const login = asyncHandler(async (req, res, next) => {
   }
 });
 
-const search = asyncHandler(async (req, res, next) => {
-  const { search } = req.body;
-  if (search) {
-    const data = await Email.aggregate([
-      {
-        $search: {
-          index: "search",
-          text: {
-            query: search,
-            path: {
-              wildcard: "*",
-            },
-            fuzzy: {},
+const search = asyncHandler( async (req,res,next) => {
+  console.log(req)
+  const { search } = req.body 
+  if(search)
+  {
+  const data = await Email.aggregate([
+    {
+      $search: {
+        index: "search",
+        text: {
+          query: search,
+          path: {
+            wildcard: "*"
           },
-        },
-      },
-      {
-        $sort: {
-          score: -1, // Sort by the 'score' field in descending order
-        },
-      },
-    ]);
+          "fuzzy" : {}
+        }
+      }
+    },
+    {
+      $sort: {
+        score: -1 // Sort by the 'score' field in descending order
+      }
+    }
+  ])
 
-    // return res.status(200).json({
-    //   data : data
-    // })
-    res.render("../view/index.ejs", { data: data });
-  } else {
-    const data = await Email.find().sort({ createdAt: -1 }).limit(10);
-    console.log(data);
-    res.render("../view/index.ejs", { data: data });
-  }
-});
+  // return res.status(200).json({
+  //   data : data
+  // })
+
+  res.render("../view/index.ejs" , {data : data})
+}else
+{
+  const data = await Email.find().sort({createdAt: -1}).limit(10)
+    console.log(data)
+    res.render("../view/index.ejs" , {data : data})
+}
+
+}
+)
 
 module.exports = {
   sendEmail,

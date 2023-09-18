@@ -43,19 +43,19 @@ bookingForm.addEventListener("submit", () => {
   loading.classList.add("active");
 });
 
-searchInput.addEventListener("input", () => {
-  console.log(searchInput.value)
-  const formData = new FormData();
-  formData.append("search", searchInput.value);
-  fetch("/search", {
-    method: "POST",
-    body: JSON.stringify({ search:searchInput.value }), // Send the search query as JSON
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-});
+// searchInput.addEventListener("input", () => {
+//   console.log(searchInput.value)
+//   const formData = new FormData();
+//   formData.append("search", searchInput.value);
+//   fetch("/search", {
+//     method: "POST",
+//     body: JSON.stringify({ search:searchInput.value }), // Send the search query as JSON
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   })
+// });
 
-searchForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-});
+// searchForm.addEventListener("submit", (e) => {
+//   e.preventDefault();
+// });
