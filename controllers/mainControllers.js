@@ -1309,7 +1309,7 @@ const sendEmail = asyncHandler(async(req,res,next) => {
 
 const displayLogs = asyncHandler(async (req,res,next) => {
   try{
-    const data = await Email.find().sort({createdAt: -1}).limit(10)
+    const data = await Email.find().sort({createdAt: -1}).limit(5)
     console.log(data)
     res.render("../view/index.ejs" , {data : data})
     // return res.status(200).json({
@@ -1350,7 +1350,6 @@ const login = asyncHandler( async (req,res,next) => {
 )
 
 const search = asyncHandler( async (req,res,next) => {
-  console.log(req)
   const { search } = req.body 
   if(search)
   {
@@ -1381,7 +1380,7 @@ const search = asyncHandler( async (req,res,next) => {
   res.render("../view/index.ejs" , {data : data})
 }else
 {
-  const data = await Email.find().sort({createdAt: -1}).limit(10)
+  const data = await Email.find().sort({createdAt: -1}).limit(5)
     console.log(data)
     res.render("../view/index.ejs" , {data : data})
 }
