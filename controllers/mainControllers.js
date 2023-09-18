@@ -1290,7 +1290,6 @@ const sendEmail = asyncHandler(async(req,res,next) => {
       })
       try{
         await newEmail.save()
-        const data = await Email.find().sort({createdAt: -1}).limit(5)
         res.cookie("sent", "true");
         res.redirect("/")
         
@@ -1334,7 +1333,6 @@ const login = asyncHandler(async (req, res, next) => {
 });
 
 const search = asyncHandler( async (req,res,next) => {
-  console.log(req)
   const { search } = req.body 
   if(search)
   {
