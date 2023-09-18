@@ -1,9 +1,8 @@
-const Email = require("../models/emailSchema")
+const Email = require("../models/emailSchema");
 require("dotenv").config();
 const asyncHandler = require("express-async-handler");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-
 
 const transporter = nodemailer.createTransport({
   name: process.env.AUTH_HOST,
@@ -30,7 +29,6 @@ transporter.verify((err, success) => {
 const sendEmail = asyncHandler(async(req,res,next) => {
   console.log("req.body")
   console.log(req.body)
-
   const {closerName , customerName , customerEmail , hotelName , hotelPrice} = req.body 
   const mailOption = {
     from: "Business Travel Bureau <res@btbintl.com>", // sender address
@@ -1270,18 +1268,15 @@ const sendEmail = asyncHandler(async(req,res,next) => {
     
     </html>
     `, // html body
-  }
-  
-  transporter.sendMail(mailOption , async(err , info) => {
-    if(err)
-    {
-      console.error('Error sending email:');
+  };
+
+  transporter.sendMail(mailOption, async (err, info) => {
+    if (err) {
+      console.error("Error sending email:");
       console.log(err);
-    }else
-    {
-      
-      console.log('Email sent !');
-      
+    } else {
+      console.log("Email sent !");
+
       // res.status(200).json({
       //   message : "Email sent"
       // })
@@ -1301,57 +1296,43 @@ const sendEmail = asyncHandler(async(req,res,next) => {
       {
         console.log(err)
       }
-      
     }
-  }
-  )
-
-  
-})
+  });
+});
 
 const displayLogs = asyncHandler(async (req,res,next) => {
   try{
-    const data = await Email.find().sort({createdAt: -1}).limit(5)
+    const data = await Email.find().sort({createdAt: -1}).limit(10)
     console.log(data)
     res.render("../view/index.ejs" , {data : data , sent : false})
     // return res.status(200).json({
     //   data : data
     // })
-  }catch(err)
-  {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
     return res.status(404).json({
-      message : "Error while getting data !"
-    })
+      message: "Error while getting data !",
+    });
   }
+});
 
-  
-})
-
-const login = asyncHandler( async (req,res,next) => {
-
-  const { Password } = req.body 
-  console.log(req.body)
-  if(Password == process.env.SECRET_PASS)
-  {
-    let token = jwt.sign(
-      {},
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "30h",
-      }
-    );
-    console.log(token)
+const login = asyncHandler(async (req, res, next) => {
+  const { Password } = req.body;
+  console.log(req.body);
+  if (Password == process.env.SECRET_PASS) {
+    let token = jwt.sign({}, process.env.SECRET_KEY, {
+      expiresIn: "30h",
+    });
+    console.log(token);
     res.cookie("token", token);
-    res.redirect("/")
-  }else
-  {
-    res.render("../view/login.ejs")
+    res.redirect("/");
+  } else {
+    res.render("../view/login.ejs");
   }
-}
-)
+});
 
 const search = asyncHandler( async (req,res,next) => {
+  console.log(req)
   const { search } = req.body 
   if(search)
   {
@@ -1382,7 +1363,7 @@ const search = asyncHandler( async (req,res,next) => {
   res.render("../view/index.ejs" , {data : data , sent : false})
 }else
 {
-  const data = await Email.find().sort({createdAt: -1}).limit(5)
+  const data = await Email.find().sort({createdAt: -1}).limit(10)
     console.log(data)
     res.render("../view/index.ejs" , {data : data , sent : false})
 }
@@ -1395,4 +1376,4 @@ module.exports = {
   displayLogs,
   login,
   search,
-}
+};

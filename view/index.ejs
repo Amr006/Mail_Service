@@ -43,10 +43,10 @@
           <%data.forEach((e) => { %>
           <div class="log grid jcs aic pad10 g10">
             <div class="log_info grid jcfs aic g5">
-              <h4>Customer Name : <%= e.CustomerName%></h4>
-              <h4>Customer Email : <%= e.CustomerEmail%></h4>
-              <h4>Hotel Name : <%= e.HotelName%></h4>
-              <h4>Closer Name : <%= e.CloserName%></h4>
+              <h4>Customer Name : <span><%= e.CustomerName%></span></h4>
+              <h4>Customer Email : <span><%= e.CustomerEmail%></span></h4>
+              <h4>Hotel Name : <span><%= e.HotelName%></span></h4>
+              <h4>Closer Name : <span><%= e.CloserName%></span></h4>
               <h5><%= e.createdAt %></h5>
             </div>
           </div>
@@ -59,10 +59,10 @@
         <form
           action="/sendEmail"
           method="post"
-          class="contain grid jcs aifs pad20 g30"
+          class="form"
           id="booking_form"
         >
-          <div class="head flex jcsb aic g30">
+          <div class="head flex jcsb pad20 aic g30">
             <h3 class="flex jcfs aic g10">
               <div id="close_button" class="flex close_icon jcc aic">
                 <i class="fa-solid fa-xmark"></i>
@@ -82,7 +82,7 @@
               </button>
             </div>
           </div>
-          <div class="form_inputs grid jcs aifs g30">
+          <div class="form_inputs pad20 grid jcs aifs g30">
             <div class="closer_name grid jcs aic g10">
               <label for="closer_name">Closer Name</label>
               <select
@@ -147,6 +147,10 @@
       <div class="loading jcc aic">
         <div class="overlay"></div>
         <img src="../Images/spinner.gif" alt="loading" />
+      </div>
+
+      <div >
+
       </div>
     </main>
     <script src="../index.js"></script>
