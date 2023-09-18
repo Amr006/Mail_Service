@@ -14,7 +14,7 @@ button.primary, button.secondary {
 }
 
 .form_search {
-    border: 1px solid var(--gray);
+    border: 2px solid var(--gray);
 }
 
 .form_search input {

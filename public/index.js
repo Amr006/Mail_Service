@@ -16,6 +16,7 @@ const customerName = document.getElementById("customer_name");
 const customerEmail = document.getElementById("customer_email");
 const hotelName = document.getElementById("hotel_name");
 const hotelPrice = document.getElementById("hotel_price");
+const searchInput = document.getElementById("search")
 
 function close_form() {
   overlay.classList.remove("overlay");
@@ -38,3 +39,7 @@ cancelButton.addEventListener("click", close_form);
 bookingForm.addEventListener("submit", () => {
   loading.classList.add("active");
 });
+
+searchInput.addEventListener("input",async()=>{
+  await fetch("/search")
+})
