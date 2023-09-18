@@ -34,7 +34,7 @@ const sendEmail = asyncHandler(async(req,res,next) => {
   const mailOption = {
     from: process.env.AUTH_EMAIL, // sender address
     to: customerEmail, // list of receivers
-    subject: closerName, // Subject line
+    subject: hotelName, // Subject line
     html: `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
     <html lang="en">
     <head>
@@ -362,7 +362,7 @@ const sendEmail = asyncHandler(async(req,res,next) => {
         }
       }
     </style><meta name="robots" content="noindex, nofollow">
-    <title>Online Booking Form For </title>
+    <title>${hotelName}</title>
     </head>
     
     <body class="mlBodyBackground" style="padding: 0; margin: 0; -webkit-font-smoothing:antialiased; background-color:#f6f8f9; -webkit-text-size-adjust:none;">
@@ -1185,7 +1185,7 @@ const sendEmail = asyncHandler(async(req,res,next) => {
     
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="left" width="267" style="width: 267px; min-width: 267px;" class="mlContentTable marginBottom">
                   <tr>
-                    <td align="left" class="bodyTitle" id="footerText-14" style="font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 150%; color: #ffffff;"><p style="margin-top: 0px; margin-bottom: 0px;">13 Newel St. Apt# 1RR, <br>Brooklyn, NY 11222<br>P: <a href="tel:(315)%20512-5456" style="word-break: break-word; font-family: 'Poppins', sans-serif; color: #ffffff; text-decoration: none;">(315) 512-5456</a><br>Support Team<br><a href="support@btbintl.com" style="word-break: break-word; font-family: 'Poppins', sans-serif; color: #ffffff; text-decoration: none;"><span class="__cf_email__" data-cfemail="support@btbintl.com">support@btbintl.com</span></a></p></td>
+                    <td align="left" class="bodyTitle" id="footerText-14" style="font-family: 'Poppins', sans-serif; font-size: 12px; line-height: 150%; color: #ffffff;"><p style="margin-top: 0px; margin-bottom: 0px;">13 Newel St. Apt# 1RR, <br>Brooklyn, NY 11222<br>P:(315) 512-5456<br>Support Team<br>support@btbintl.com</p></td>
                   </tr>
                   <tr>
                     <td height="25" class="spacingHeight-20"></td>
@@ -1266,7 +1266,7 @@ const sendEmail = asyncHandler(async(req,res,next) => {
     <!--<![endif]-->
     
     </div>
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+    
     </html>
     `, // html body
   }
