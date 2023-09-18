@@ -3,6 +3,7 @@ require("dotenv").config();
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const cookieParser = require("cookie-parser");
 
 const transporter = nodemailer.createTransport({
   name: process.env.AUTH_HOST,
@@ -1290,7 +1291,8 @@ const sendEmail = asyncHandler(async(req,res,next) => {
       try{
         await newEmail.save()
         const data = await Email.find().sort({createdAt: -1}).limit(5)
-        res.render("../view/index.ejs" , {data : data , sent : true})
+        res.cookie("sent", "true");
+        res.redirect("/")
         
       }catch(err)
       {
@@ -1304,7 +1306,7 @@ const displayLogs = asyncHandler(async (req,res,next) => {
   try{
     const data = await Email.find().sort({createdAt: -1}).limit(10)
     console.log(data)
-    res.render("../view/index.ejs" , {data : data , sent : false})
+    res.render("../view/index.ejs" , {data : data})
     // return res.status(200).json({
     //   data : data
     // })
@@ -1360,12 +1362,12 @@ const search = asyncHandler( async (req,res,next) => {
   //   data : data
   // })
 
-  res.render("../view/index.ejs" , {data : data , sent : false})
+  res.render("../view/index.ejs" , {data : data })
 }else
 {
   const data = await Email.find().sort({createdAt: -1}).limit(10)
     console.log(data)
-    res.render("../view/index.ejs" , {data : data , sent : false})
+    res.render("../view/index.ejs" , {data : data })
 }
 
 }
