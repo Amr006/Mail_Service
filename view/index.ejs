@@ -22,7 +22,12 @@
                 <i class="fa-solid fa-plus"></i> Add
               </button>
             </div>
-            <form action="/search" method="POST" id="search_form" class="form_search flex jcs aic">
+            <form
+              action="/search"
+              method="POST"
+              id="search_form"
+              class="form_search flex jcs aic"
+            >
               <input
                 type="search"
                 name="search"
@@ -37,7 +42,6 @@
           </div>
         </div>
       </header>
-      <div><%sent%></div>
 
       <section class="logs">
         <div class="contain grid jcs aic g30">
@@ -54,15 +58,10 @@
           <% }); %>
         </div>
       </section>
-      <%console.log(sent)%>
+
       <section class="booking_form">
         <div class="back"></div>
-        <form
-          action="/sendEmail"
-          method="post"
-          class="form"
-          id="booking_form"
-        >
+        <form action="/sendEmail" method="post" class="form" id="booking_form">
           <div class="head flex jcsb pad20 aic g30">
             <h3 class="flex jcfs aic g10">
               <div id="close_button" class="flex close_icon jcc aic">
@@ -149,7 +148,8 @@
         <div class="overlay"></div>
         <img src="../Images/spinner.gif" alt="loading" />
       </div>
-      <div class="webGhoul-alert center_abs_x flex jcc aic pad10">
+
+      <div class="webGhoul-alert flex jcc aic pad10">
         <span class="flex jcc aic g10">
           <i class="fa-solid fa-circle-check"></i>
           <p>Message Sent Successfully!!</p>
