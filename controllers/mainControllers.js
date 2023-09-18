@@ -1294,7 +1294,8 @@ const sendEmail = asyncHandler(async(req,res,next) => {
       })
       try{
         await newEmail.save()
-        res.redirect("/")
+        const data = await Email.find().sort({createdAt: -1}).limit(5)
+        res.render("../view/index.ejs" , {data : data , sent : true})
         
       }catch(err)
       {
@@ -1312,7 +1313,7 @@ const displayLogs = asyncHandler(async (req,res,next) => {
   try{
     const data = await Email.find().sort({createdAt: -1}).limit(5)
     console.log(data)
-    res.render("../view/index.ejs" , {data : data})
+    res.render("../view/index.ejs" , {data : data , sent : false})
     // return res.status(200).json({
     //   data : data
     // })
@@ -1378,12 +1379,12 @@ const search = asyncHandler( async (req,res,next) => {
   //   data : data
   // })
 
-  res.render("../view/index.ejs" , {data : data})
+  res.render("../view/index.ejs" , {data : data , sent : false})
 }else
 {
   const data = await Email.find().sort({createdAt: -1}).limit(5)
     console.log(data)
-    res.render("../view/index.ejs" , {data : data})
+    res.render("../view/index.ejs" , {data : data , sent : false})
 }
 
 }
