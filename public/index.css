@@ -23,11 +23,11 @@ button.primary, button.secondary {
     transition: var(--transition);
 }
 
-.form_search:hover,.form_search:focus{
+.form_search:hover, .form_search:focus {
     border-color: #037ef3;
 }
 
-.search_button i{
+.search_button i {
     font-size: 20px;
 }
 
@@ -53,8 +53,8 @@ button.primary, button.secondary {
     cursor: pointer;
 }
 
-.log_info h4 span{
-    color:#037ef3;
+.log_info h4 span {
+    color: #037ef3;
 }
 
 /*End Logs*/
@@ -191,3 +191,40 @@ button.primary, button.secondary {
 }
 
 /*End loading*/
+
+/*Start webGhoul Alert*/
+.webGhoul-alert {
+    position: absolute;
+    top: 20px;
+    z-index: 10000;
+    background-color: var(--green);
+    color: var(--white);
+    transform: rotateX(90deg) translateX(-50%);
+    animation: slideIn 0.5s, slideOut 0.5s 4.5s;
+}
+
+.webGhoul-alert span {
+    font-size: 20px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: rotateX(90deg) translateX(-50%);
+    }
+
+    to {
+        transform: rotateX(0deg) translateX(-50%);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: rotateX(0deg) translateX(-50%);
+    }
+
+    to {
+        transform: rotateX(90deg) translateX(-50%);
+    }
+}
+
+/*End webGhoul Alert*/
