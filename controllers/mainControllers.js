@@ -30,9 +30,10 @@ transporter.verify((err, success) => {
 const sendEmail = asyncHandler(async(req,res,next) => {
   console.log("req.body")
   console.log(req.body)
+
   const {closerName , customerName , customerEmail , hotelName , hotelPrice} = req.body 
   const mailOption = {
-    from: process.env.AUTH_EMAIL, // sender address
+    from: "Business Travel Bureau <res@btbintl.com>", // sender address
     to: customerEmail, // list of receivers
     subject: hotelName, // Subject line
     html: `<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
@@ -834,7 +835,7 @@ const sendEmail = asyncHandler(async(req,res,next) => {
             <tr>
               <td class="bodyTitle" id="bodyText-8" style="font-family: 'Montserrat', sans-serif; font-size: 14px; line-height: 150%; color: #000000;"><p style="margin-top: 0px; margin-bottom: 10px; line-height: 150%;"><span style="color: rgb(45, 50, 86);"><span style="font-size: 28px;"><strong>Dear ${customerName}<span style="color: rgb(45, 50, 86);"></span>,</strong></span><span style="font-size: 28px;"><strong><br></strong></span><span style="font-size: 28px;"><strong><br></strong></span></span></p>
     <p style="margin-top: 0px; margin-bottom: 10px; line-height: 150%;"><span style="font-size: 28px;"><span style="color: rgb(45, 50, 86);"><strong></strong></span></span></p>
-    <p style="margin-top: 0px; margin-bottom: 0px; line-height: 150%;"><span style="font-size: 16px;"><span style="color: rgb(45, 50, 86);">Thank you for your time and consideration, please complete the form for <strong>${hotelName}<span style="color: rgb(45, 50, 86);"></span> </strong>for <strong>${hotelPrice}</strong><strong><span style="color: rgb(45, 50, 86);"></span></strong> so we can go ahead and secure your accommodations; and send you over your itineraries.</span></span></p></td>
+    <p style="margin-top: 0px; margin-bottom: 0px; line-height: 150%;"><span style="font-size: 16px;"><span style="color: rgb(45, 50, 86);">Thank you for your time and consideration, please complete the form for <strong>${hotelName}<span style="color: rgb(45, 50, 86);"></span> </strong>for <strong>$${hotelPrice}</strong><strong><span style="color: rgb(45, 50, 86);"></span></strong> so we can go ahead and secure your accommodations; and send you over your itineraries.</span></span></p></td>
             </tr>
           </table>
           
