@@ -1,7 +1,10 @@
 const overlay = document.querySelector(".back");
-const bookingFormContain = document.querySelector("section.booking_form .contain");
+const bookingFormContain = document.querySelector(
+  "section.booking_form .contain"
+);
 const loading = document.querySelector(".loading");
-const bookingForm = document.getElementById(".booking_form");
+const bookingForm = document.getElementById("booking_form");
+const searchForm = document.getElementById("search_form");
 
 //Buttons
 const addButton = document.getElementById("add_button");
@@ -16,7 +19,7 @@ const customerName = document.getElementById("customer_name");
 const customerEmail = document.getElementById("customer_email");
 const hotelName = document.getElementById("hotel_name");
 const hotelPrice = document.getElementById("hotel_price");
-const searchInput = document.getElementById("search")
+const searchInput = document.getElementById("search");
 
 function close_form() {
   overlay.classList.remove("overlay");
@@ -40,6 +43,7 @@ bookingForm.addEventListener("submit", () => {
   loading.classList.add("active");
 });
 
-searchInput.addEventListener("input",async()=>{
-  await fetch("/search")
-})
+searchInput.addEventListener("input", () => {
+  console.log(searchInput.value);
+  searchForm.submit();
+});

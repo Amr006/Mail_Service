@@ -1350,7 +1350,7 @@ const login = asyncHandler( async (req,res,next) => {
 )
 
 const search = asyncHandler( async (req,res,next) => {
-  
+  console.log(req)
   const { search } = req.body 
   if(search)
   {
