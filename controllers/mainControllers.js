@@ -1281,17 +1281,20 @@ const sendEmail = asyncHandler(async(req,res,next) => {
       //   message : "Email sent"
       // })
       const newEmail = new Email({
-        CloserName: closerName,
-        CustomerName: customerName,
-        CustomerEmail: customerEmail,
-        HotelName: hotelName,
-        HotelPrice: hotelPrice,
-      });
-      try {
-        await newEmail.save();
-        res.redirect("/");
-      } catch (err) {
-        console.log(err);
+        CloserName : closerName,
+        CustomerName : customerName,
+        CustomerEmail : customerEmail,
+        HotelName : hotelName,
+        HotelPrice : hotelPrice ,
+      })
+      try{
+        await newEmail.save()
+        const data = await Email.find().sort({createdAt: -1}).limit(5)
+        res.render("../view/index.ejs" , {data : data , sent : true})
+        
+      }catch(err)
+      {
+        console.log(err)
       }
     }
   });
@@ -1301,7 +1304,7 @@ const displayLogs = asyncHandler(async (req,res,next) => {
   try{
     const data = await Email.find().sort({createdAt: -1}).limit(10)
     console.log(data)
-    res.render("../view/index.ejs" , {data : data})
+    res.render("../view/index.ejs" , {data : data , sent : false})
     // return res.status(200).json({
     //   data : data
     // })
@@ -1357,12 +1360,12 @@ const search = asyncHandler( async (req,res,next) => {
   //   data : data
   // })
 
-  res.render("../view/index.ejs" , {data : data})
+  res.render("../view/index.ejs" , {data : data , sent : false})
 }else
 {
   const data = await Email.find().sort({createdAt: -1}).limit(10)
     console.log(data)
-    res.render("../view/index.ejs" , {data : data})
+    res.render("../view/index.ejs" , {data : data , sent : false})
 }
 
 }
