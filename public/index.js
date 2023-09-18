@@ -46,7 +46,7 @@ const handleWebGhoulAlert=()=>{
   webGhoulAlert.classList.add("active")
   setTimeout(() => {
     webGhoulAlert.classList.remove("active")
-  }, 100000); 
+  }, 5000); 
   document.cookie = "sent=false; path=/";
 }
 
