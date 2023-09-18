@@ -11,9 +11,9 @@
   </head>
 
   <body>
-    <main>
+    <main class="grid jcs aic g30">
       <header>
-        <div class="contain grid jcs aic">
+        <div class="contain grid jcs aic g30">
           <h2 class="logo flex jcc aic pad10">Business Travel Bureau</h2>
           <div class="booking grid jcs aic g20 pad10">
             <div class="flex jcsb aic g30">
@@ -58,7 +58,7 @@
           <% }); %>
         </div>
       </section>
-
+      
       <section class="booking_form">
         <div class="back"></div>
         <form action="/sendEmail" method="post" class="form" id="booking_form">
@@ -149,7 +149,7 @@
         <img src="../Images/spinner.gif" alt="loading" />
       </div>
 
-      <div class="webGhoul-alert flex jcc aic pad10">
+      <div class="webGhoul-alert center_abs_x flex jcc aic pad10" id="webGhoul_alert">
         <span class="flex jcc aic g10">
           <i class="fa-solid fa-circle-check"></i>
           <p>Message Sent Successfully!!</p>
