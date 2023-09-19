@@ -23,11 +23,11 @@ button.primary, button.secondary {
     transition: var(--transition);
 }
 
-.form_search:hover,.form_search:focus{
+.form_search:hover, .form_search:focus {
     border-color: #037ef3;
 }
 
-.search_button i{
+.search_button i {
     font-size: 20px;
 }
 
@@ -35,11 +35,20 @@ button.primary, button.secondary {
     button.primary, button.secondary {
         font-size: 16px;
     }
+
+    .form_search input, .search_button i {
+        font-size: 18px;
+    }
+
 }
 
 @media (max-width:768px) {
     button.primary, button.secondary {
         font-size: 14px;
+    }
+
+    .form_search input, .search_button i {
+        font-size: 16px;
     }
 }
 
@@ -53,8 +62,8 @@ button.primary, button.secondary {
     cursor: pointer;
 }
 
-.log_info h4 span{
-    color:#037ef3;
+.log_info h4 span {
+    color: #037ef3;
 }
 
 /*End Logs*/
@@ -86,7 +95,7 @@ button.primary, button.secondary {
     cursor: pointer;
 }
 
-.booking_form form input, .booking_form form select {
+.booking_form form input, .booking_form form select, .booking_form form select option {
     padding: 10px;
     border: 2px solid var(--gray);
     border-radius: 4px;
@@ -110,7 +119,7 @@ button.primary, button.secondary {
         font-size: 18px;
     }
 
-    .booking_form form input, .booking_form form select {
+    .booking_form form input, .booking_form form select, .booking_form form select option {
         padding: 8px;
         border: 2px solid var(--gray);
         border-radius: 3px;
@@ -135,7 +144,7 @@ button.primary, button.secondary {
         font-size: 16px;
     }
 
-    .booking_form form input, .booking_form form select {
+    .booking_form form input, .booking_form form select, .booking_form form select option {
         padding: 6px;
         border: 1px solid var(--gray);
         border-radius: 2px;
@@ -191,3 +200,35 @@ button.primary, button.secondary {
 }
 
 /*End loading*/
+
+/*Start webGhoul Alert*/
+.webGhoul-alert {
+    top: -100%;
+    z-index: 10000;
+    background-color: var(--green);
+    color: var(--white);
+    opacity: 0;
+    transition: var(--transition);
+    box-shadow: var(--box_shadow);
+}
+
+.webGhoul-alert.active {
+    opacity: 1 !important;
+    top: 20px;
+}
+
+.webGhoul-alert span {
+    font-size: 20px;
+}
+@media (max-width:992px) {
+    .webGhoul-alert span {
+        font-size: 18px;
+    }
+}
+
+@media (max-width:768px) {
+    .webGhoul-alert span {
+        font-size: 14px;
+    }
+}
+/*End webGhoul Alert*/
