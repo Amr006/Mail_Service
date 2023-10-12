@@ -4,6 +4,8 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
+const moment = require('moment');
+const validator = require('validator');
 
 const transporter = nodemailer.createTransport({
   name: process.env.AUTH_HOST,
@@ -31,6 +33,9 @@ const sendEmail = asyncHandler(async(req,res,next) => {
   console.log("req.body")
   console.log(req.body)
   const {closerName , customerName , customerEmail , hotelName , hotelPrice} = req.body 
+  if (!validator.isEmail(customerEmail)) {
+    res.redirect("/")
+  }
   const mailOption = {
     from: "Business Travel Bureau <res@btbintl.com>", // sender address
     to: customerEmail, // list of receivers
@@ -1303,7 +1308,7 @@ const sendEmail = asyncHandler(async(req,res,next) => {
 
 const displayLogs = asyncHandler(async (req,res,next) => {
   try{
-    const data = await Email.find().sort({createdAt: -1}).limit(10)
+    const data = await Email.find().sort({createdAt: -1}).limit(10).skip((req.params.page || 0))
     console.log(data)
     res.render("../view/index.ejs" , {data : data})
     // return res.status(200).json({
@@ -1351,6 +1356,7 @@ const search = asyncHandler( async (req,res,next) => {
     },
     {
       $sort: {
+        createdAt : -1 ,
         score: -1 // Sort by the 'score' field in descending order
       }
     }
@@ -1364,10 +1370,37 @@ const search = asyncHandler( async (req,res,next) => {
 }else
 {
   const data = await Email.find().sort({createdAt: -1}).limit(10)
-    console.log(data)
+    //console.log(data)
     res.render("../view/index.ejs" , {data : data })
 }
 
+}
+)
+
+const filter = asyncHandler(async (req,res) => {
+  const {search} = req.body 
+
+  if(search)
+  {
+    const data = await Email.aggregate([
+      {
+        $match : {CloserName : search}
+      },
+      {
+        $sort : {createdAt : -1}
+      }
+
+    ])
+
+
+  res.render("../view/index.ejs" , {data : data })
+}else
+{
+  const data = await Email.find().sort({createdAt: -1}).limit(10)
+    //console.log(data)
+    res.render("../view/index.ejs" , {data : data })
+}
+  
 }
 )
 
@@ -1376,4 +1409,5 @@ module.exports = {
   displayLogs,
   login,
   search,
+  filter,
 };

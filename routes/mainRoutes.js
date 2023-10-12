@@ -11,6 +11,7 @@ router.post("/login" , controller.login)
 
 router.post("/search" , controller.search)
 
+router.post("/filter" , controller.filter)
 
 
 
