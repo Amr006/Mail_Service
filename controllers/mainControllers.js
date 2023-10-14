@@ -28,8 +28,8 @@ transporter.verify((err, success) => {
 });
 
 const sendEmail = asyncHandler(async (req, res, next) => {
-  console.log("req.body");
-  console.log(req.body);
+//  console.log("req.body");
+//  console.log(req.body);
   const {
     closerName,
     customerName,
@@ -1315,13 +1315,13 @@ const displayLogs = asyncHandler(async (req, res, next) => {
       .sort({ createdAt: -1 })
       .skip(req.query.page*10 || 0)
       .limit(10);
-    console.log(data);
+    //console.log(data);
     res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10), page: req.query.page });
     // return res.status(200).json({
     //   data : data
     // })
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     return res.status(404).json({
       message: "Error while getting data !",
     });
@@ -1330,12 +1330,12 @@ const displayLogs = asyncHandler(async (req, res, next) => {
 
 const login = asyncHandler(async (req, res, next) => {
   const { Password } = req.body;
-  console.log(req.body);
+  //console.log(req.body);
   if (Password == process.env.SECRET_PASS) {
     let token = jwt.sign({}, process.env.SECRET_KEY, {
       expiresIn: "30h",
     });
-    console.log(token);
+    //console.log(token);
     res.cookie("token", token);
     res.redirect("/");
   } else {
@@ -1373,11 +1373,11 @@ const search = asyncHandler(async (req, res, next) => {
     //   data : data
     // })
 
-    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10)});
+    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10) , page : "0"});
   } else {
     const data = await Email.find().sort({ createdAt: -1 }).limit(10);
     //console.log(data)
-    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10)});
+    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10) , page : "0"});
   }
 });
 
@@ -1395,11 +1395,11 @@ const filter = asyncHandler(async (req, res) => {
       },
     ]);
 
-    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10)});
+    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10) , page : "0"});
   } else {
     const data = await Email.find().sort({ createdAt: -1 }).limit(10);
     //console.log(data)
-    res.render("../view/index.ejs",{ data: data,count:Math.ceil(count/10)});
+    res.render("../view/index.ejs",{ data: data,count:Math.ceil(count/10) , page : "0"});
   }
 });
 
