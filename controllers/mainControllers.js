@@ -1345,6 +1345,8 @@ const login = asyncHandler(async (req, res, next) => {
 
 const search = asyncHandler(async (req, res, next) => {
   const { search } = req.body;
+  const count = await Email.countDocuments({});
+
   if (search) {
     const data = await Email.aggregate([
       {
@@ -1371,16 +1373,18 @@ const search = asyncHandler(async (req, res, next) => {
     //   data : data
     // })
 
-    res.render("../view/index.ejs", { data: data });
+    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10)});
   } else {
     const data = await Email.find().sort({ createdAt: -1 }).limit(10);
     //console.log(data)
-    res.render("../view/index.ejs", { data: data});
+    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10)});
   }
 });
 
 const filter = asyncHandler(async (req, res) => {
   const { closerName } = req.body;
+  const count = await Email.countDocuments({});
+
   if (closerName) {
     const data = await Email.aggregate([
       {
@@ -1391,11 +1395,11 @@ const filter = asyncHandler(async (req, res) => {
       },
     ]);
 
-    res.render("../view/index.ejs", { data: data });
+    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10)});
   } else {
     const data = await Email.find().sort({ createdAt: -1 }).limit(10);
     //console.log(data)
-    res.render("../view/index.ejs", { data: data });
+    res.render("../view/index.ejs",{ data: data,count:Math.ceil(count/10)});
   }
 });
 
