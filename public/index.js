@@ -3,6 +3,7 @@ const bookingFormContain = document.querySelector("section.booking_form .form");
 const loading = document.querySelector(".loading");
 const bookingForm = document.getElementById("booking_form");
 const searchForm = document.getElementById("search_form");
+const selectForm = document.getElementById("select_page_form");
 const filterForm = document.getElementById("filter_form");
 
 //Buttons
@@ -20,6 +21,7 @@ const hotelName = document.getElementById("hotel_name");
 const hotelPrice = document.getElementById("hotel_price");
 const searchInput = document.getElementById("search");
 const filterSelect = document.getElementById("filter_by_closer_name");
+const selectPage = document.getElementById("select_page");
 const webGhoulAlert = document.getElementById("webGhoul_alert");
 
 filterSelect.addEventListener("change", () => {
@@ -64,6 +66,11 @@ const cookieData = Object.fromEntries(
 if (cookieData.sent === "true") {
   handleWebGhoulAlert();
 }
+
+selectPage.addEventListener("change", (e) => {
+  selectForm.action = `${selectForm.action}?page=${selectPage.value}`
+  selectForm.submit()
+});
 
 // searchInput.addEventListener("input", () => {
 //   console.log(searchInput.value)

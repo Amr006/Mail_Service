@@ -46,6 +46,20 @@
                 </select>
               </form>
               <form
+                action="/"
+                method="GET"
+                id="select_page_form"
+                class="form_filter flex jcs aic g10"
+              >
+                <h3>Select Page :</h3>
+                <select id="select_page" name="page">
+                  <option value="0">Select Page</option>
+                  <% for(let i=1;i<count;i++){ %>
+                  <option value=<%=i%>><%=i%></option>
+                  <% } %>
+                </select>
+              </form>
+              <form
                 action="/search"
                 method="POST"
                 id="search_form"

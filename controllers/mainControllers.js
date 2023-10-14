@@ -1310,12 +1310,13 @@ const sendEmail = asyncHandler(async (req, res, next) => {
 
 const displayLogs = asyncHandler(async (req, res, next) => {
   try {
+    const count = await Email.countDocuments({});
     const data = await Email.find()
       .sort({ createdAt: -1 })
-      .limit(10)
-      .skip(req.params.page || 0);
+      .skip(req.query.page*10 || 0)
+      .limit(10);
     console.log(data);
-    res.render("../view/index.ejs", { data: data });
+    res.render("../view/index.ejs", { data: data,count:Math.ceil(count/10), page: req.query.page });
     // return res.status(200).json({
     //   data : data
     // })
@@ -1374,7 +1375,7 @@ const search = asyncHandler(async (req, res, next) => {
   } else {
     const data = await Email.find().sort({ createdAt: -1 }).limit(10);
     //console.log(data)
-    res.render("../view/index.ejs", { data: data });
+    res.render("../view/index.ejs", { data: data});
   }
 });
 
