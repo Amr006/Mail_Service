@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../index.css" />
     <link rel="stylesheet" href="../all.min.css" />
     <link rel="stylesheet" href="../fontawesome.min.css" />
+    <link rel="icon" href="../Images/BTB LOGO ICON COLORED-01.png" />
     <title>Business Travel Bureau</title>
   </head>
   <script src="../node_modules/moment/src/moment.js"></script>
@@ -14,7 +15,11 @@
     <main class="grid jcs aic g30">
       <header>
         <div class="contain grid jcs aic g30">
-          <h2 class="logo flex jcc aic pad10">Business Travel Bureau</h2>
+          <img
+            src="../Images/BTB LOGO COLORED-01.png"
+            alt="logo"
+            class="center_rel_x logo"
+          />
           <div class="booking grid jcs aic g20 pad10">
             <div class="flex jcsb aic g30">
               <h3>Online Booking Form</h3>
@@ -22,23 +27,42 @@
                 <i class="fa-solid fa-plus"></i> Add
               </button>
             </div>
-            <form
-              action="/search"
-              method="POST"
-              id="search_form"
-              class="form_search flex jcs aic"
-            >
-              <input
-                type="search"
-                name="search"
-                id="search"
-                placeholder="Search..."
-                class="pad10"
-              />
-              <button type="submit" class="flex search_button jcc aic pad10">
-                <i class="fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
+            <div class="flex jcsb aic g30 flex_wrap">
+              <form
+                action="/filter"
+                method="POST"
+                id="filter_form"
+                class="form_filter flex jcs aic g10"
+              >
+                <h3>Filter By :</h3>
+                <select id="filter_by_closer_name" name="closerName">
+                  <option value="">Closer Name</option>
+                  <option value="Jasmine Griffin">Jasmine Griffin</option>
+                  <option value="Oliver Shaw">Oliver Shaw</option>
+                  <option value="Veronica Iceberg">Veronica Iceberg</option>
+                  <option value="Sarah Anderson">Sarah Anderson</option>
+                  <option value="April Adams">April Adams</option>
+                  <option value="Harry Stanford">Harry Stanford</option>
+                </select>
+              </form>
+              <form
+                action="/search"
+                method="POST"
+                id="search_form"
+                class="form_search flex jcs aic"
+              >
+                <input
+                  type="search"
+                  name="search"
+                  id="search"
+                  placeholder="Search..."
+                  class="pad10"
+                />
+                <button type="submit" class="flex search_button jcc aic pad10">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </header>
@@ -52,13 +76,17 @@
               <h4>Customer Email : <span><%= e.CustomerEmail%></span></h4>
               <h4>Hotel Name : <span><%= e.HotelName%></span></h4>
               <h4>Closer Name : <span><%= e.CloserName%></span></h4>
-              <h5><%=  new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date(e.createdAt)); %></h5>
+              <h5>
+                <%= new Intl.DateTimeFormat('en-US', { year: 'numeric', month:
+                '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+                second: '2-digit' }).format(new Date(e.createdAt)); %>
+              </h5>
             </div>
           </div>
           <% }); %>
         </div>
       </section>
-      
+
       <section class="booking_form">
         <div class="back"></div>
         <form action="/sendEmail" method="post" class="form" id="booking_form">
@@ -85,18 +113,14 @@
           <div class="form_inputs pad20 grid jcs aifs g30">
             <div class="closer_name grid jcs aic g10">
               <label for="closer_name">Closer Name</label>
-              <select
-                id="closer_name"
-                required
-                name="closerName"
-                id="closer_name"
-              >
+              <select required name="closerName" id="closer_name">
                 <option value="Choose Closer Name"></option>
                 <option value="Jasmine Griffin">Jasmine Griffin</option>
                 <option value="Oliver Shaw">Oliver Shaw</option>
                 <option value="Veronica Iceberg">Veronica Iceberg</option>
                 <option value="Sarah Anderson">Sarah Anderson</option>
                 <option value="April Adams">April Adams</option>
+                <option value="Harry Stanford">Harry Stanford</option>
               </select>
             </div>
             <div class="customer_name grid jcs aic g10">
@@ -149,7 +173,10 @@
         <img src="../Images/spinner.gif" alt="loading" />
       </div>
 
-      <div class="webGhoul-alert center_abs_x flex jcc aic pad10" id="webGhoul_alert">
+      <div
+        class="webGhoul-alert center_abs_x flex jcc aic pad10"
+        id="webGhoul_alert"
+      >
         <span class="flex jcc aic g10">
           <i class="fa-solid fa-circle-check"></i>
           <p>Message Sent Successfully!!</p>

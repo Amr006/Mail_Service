@@ -4,8 +4,8 @@ const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
-const moment = require('moment');
-const validator = require('validator');
+const moment = require("moment");
+const validator = require("validator");
 
 const transporter = nodemailer.createTransport({
   name: process.env.AUTH_HOST,
@@ -27,14 +27,18 @@ transporter.verify((err, success) => {
   }
 });
 
-
-
-const sendEmail = asyncHandler(async(req,res,next) => {
-  console.log("req.body")
-  console.log(req.body)
-  const {closerName , customerName , customerEmail , hotelName , hotelPrice} = req.body 
+const sendEmail = asyncHandler(async (req, res, next) => {
+  console.log("req.body");
+  console.log(req.body);
+  const {
+    closerName,
+    customerName,
+    customerEmail,
+    hotelName,
+    hotelPrice,
+  } = req.body;
   if (!validator.isEmail(customerEmail)) {
-    res.redirect("/")
+    res.redirect("/");
   }
   const mailOption = {
     from: "Business Travel Bureau <res@btbintl.com>", // sender address
@@ -1287,30 +1291,31 @@ const sendEmail = asyncHandler(async(req,res,next) => {
       //   message : "Email sent"
       // })
       const newEmail = new Email({
-        CloserName : closerName,
-        CustomerName : customerName,
-        CustomerEmail : customerEmail,
-        HotelName : hotelName,
-        HotelPrice : hotelPrice ,
-      })
-      try{
-        await newEmail.save()
+        CloserName: closerName,
+        CustomerName: customerName,
+        CustomerEmail: customerEmail,
+        HotelName: hotelName,
+        HotelPrice: hotelPrice,
+      });
+      try {
+        await newEmail.save();
         res.cookie("sent", "true");
-        res.redirect("/")
-        
-      }catch(err)
-      {
-        console.log(err)
+        res.redirect("/");
+      } catch (err) {
+        console.log(err);
       }
     }
   });
 });
 
-const displayLogs = asyncHandler(async (req,res,next) => {
-  try{
-    const data = await Email.find().sort({createdAt: -1}).limit(10).skip((req.params.page || 0))
-    console.log(data)
-    res.render("../view/index.ejs" , {data : data})
+const displayLogs = asyncHandler(async (req, res, next) => {
+  try {
+    const data = await Email.find()
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .skip(req.params.page || 0);
+    console.log(data);
+    res.render("../view/index.ejs", { data: data });
     // return res.status(200).json({
     //   data : data
     // })
@@ -1337,72 +1342,61 @@ const login = asyncHandler(async (req, res, next) => {
   }
 });
 
-const search = asyncHandler( async (req,res,next) => {
-  const { search } = req.body 
-  if(search)
-  {
-  const data = await Email.aggregate([
-    {
-      $search: {
-        index: "search",
-        text: {
-          query: search,
-          path: {
-            wildcard: "*"
-          },
-          "fuzzy" : {}
-        }
-      }
-    },
-    {
-      $sort: {
-        createdAt : -1 ,
-        score: -1 // Sort by the 'score' field in descending order
-      }
-    }
-  ])
-
-  // return res.status(200).json({
-  //   data : data
-  // })
-
-  res.render("../view/index.ejs" , {data : data })
-}else
-{
-  const data = await Email.find().sort({createdAt: -1}).limit(10)
-    //console.log(data)
-    res.render("../view/index.ejs" , {data : data })
-}
-
-}
-)
-
-const filter = asyncHandler(async (req,res) => {
-  const {search} = req.body 
-
-  if(search)
-  {
+const search = asyncHandler(async (req, res, next) => {
+  const { search } = req.body;
+  if (search) {
     const data = await Email.aggregate([
       {
-        $match : {CloserName : search}
+        $search: {
+          index: "search",
+          text: {
+            query: search,
+            path: {
+              wildcard: "*",
+            },
+            fuzzy: {},
+          },
+        },
       },
       {
-        $sort : {createdAt : -1}
-      }
+        $sort: {
+          createdAt: -1,
+          score: -1, // Sort by the 'score' field in descending order
+        },
+      },
+    ]);
 
-    ])
+    // return res.status(200).json({
+    //   data : data
+    // })
 
-
-  res.render("../view/index.ejs" , {data : data })
-}else
-{
-  const data = await Email.find().sort({createdAt: -1}).limit(10)
+    res.render("../view/index.ejs", { data: data });
+  } else {
+    const data = await Email.find().sort({ createdAt: -1 }).limit(10);
     //console.log(data)
-    res.render("../view/index.ejs" , {data : data })
-}
-  
-}
-)
+    res.render("../view/index.ejs", { data: data });
+  }
+});
+
+const filter = asyncHandler(async (req, res) => {
+  const { closerName } = req.body;
+  if (closerName) {
+    const data = await Email.aggregate([
+      {
+        $match: { CloserName: closerName },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+    ]);
+
+    res.render("../view/index.ejs", { data: data });
+  } else {
+    const data = await Email.find().sort({ createdAt: -1 }).limit(10);
+    //console.log(data)
+    res.render("../view/index.ejs", { data: data });
+  }
+});
 
 module.exports = {
   sendEmail,
