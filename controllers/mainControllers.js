@@ -7,11 +7,19 @@ const cookieParser = require("cookie-parser");
 const moment = require("moment");
 const validator = require("validator");
 
+// const transporter = nodemailer.createTransport({
+//   name: process.env.AUTH_HOST,
+//   host: process.env.AUTH_HOST,
+//   port: 465, // Bluehost usually uses port 465 for secure SMTP.
+//   secure: true, // Use SSL/TLS for secure connection.
+//   auth: {
+//     user: process.env.AUTH_EMAIL,
+//     pass: process.env.AUTH_PASS_APP,
+//   },
+// });
+
 const transporter = nodemailer.createTransport({
-  name: process.env.AUTH_HOST,
-  host: process.env.AUTH_HOST,
-  port: 465, // Bluehost usually uses port 465 for secure SMTP.
-  secure: true, // Use SSL/TLS for secure connection.
+  service: "gmail",
   auth: {
     user: process.env.AUTH_EMAIL,
     pass: process.env.AUTH_PASS_APP,
