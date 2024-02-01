@@ -18,6 +18,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.AUTH_EMAIL,
+//     pass: process.env.AUTH_PASS_APP,
+//   },
+// });
+
 transporter.verify((err, success) => {
   if (err) {
     console.log(err);
