@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
 const moment = require("moment");
 const validator = require("validator");
+const axios = require('axios');
 
 const transporter = nodemailer.createTransport({
   name: process.env.AUTH_HOST,
@@ -46,7 +47,7 @@ const sendEmail = asyncHandler(async (req, res, next) => {
     hotelPrice,
   } = req.body;
   if (!validator.isEmail(customerEmail)) {
-    res.redirect("/");
+    return res.redirect("/");
   }
   const mailOption = {
     from: "Business Travel Bureau <res@btbintl.com>", // sender address
@@ -1306,9 +1307,51 @@ const sendEmail = asyncHandler(async (req, res, next) => {
         HotelPrice: hotelPrice,
       });
       try {
+        let data = JSON.stringify({
+          "email": customerEmail,
+          "fields": {
+            "name": customerName,
+            "hotel_name": hotelName,
+            "hotel_price":hotelPrice,
+          },
+          "groups": [
+            "113182351660418787"
+          ]
+        });
+        
+        let config = {
+          method: 'post',
+          maxBodyLength: Infinity,
+          url: 'https://connect.mailerlite.com/api/subscribers',
+          headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${process.env.MailerLite_Token}`
+          },
+          data : data
+        };
+        
+        try {
+          const resp = axios.request(config);
+          
+        } catch (error) {
+          console.error("Error making request to MailerLite API:", error);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            console.error("Server responded with status code:", error.response.status);
+            console.error("Response data:", error.response.data);
+            console.error("Response headers:", error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error("No response received from server.");
+            console.error("Request details:", error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error("Error setting up request:", error.message);
+          }
+        }
         await newEmail.save();
         res.cookie("sent", "true");
-        res.redirect("/");
+        return res.redirect("/");
       } catch (err) {
         console.log(err);
       }
