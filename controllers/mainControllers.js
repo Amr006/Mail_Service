@@ -1331,7 +1331,7 @@ const sendEmail = asyncHandler(async (req, res, next) => {
         };
         
         try {
-          const resp = axios.request(config);
+          const resp = await axios.request(config);
           
         } catch (error) {
           console.error("Error making request to MailerLite API:", error);
